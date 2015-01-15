@@ -1,0 +1,30 @@
+{
+	"ui_source": [
+		"../src/util/ScaleBitmap.js",
+	    "../src/util/mouseWheelSupport.js",
+		"../src/skin/Theme.js",
+		"../src/layout/ViewPortBounds.js",
+		"../src/layout/Layout.js",
+		"../src/layout/LayoutAlignment.js",
+		"../src/layout/VerticalLayout.js",
+		"../src/layout/HorizontalLayout.js",
+	    "../src/layout/TiledLayout.js",
+	    "../src/layout/TiledRowsLayout.js",
+	    "../src/layout/TiledColumnsLayout.js",
+		"../src/core/Control.js",
+		"../src/shapes/Shape.js",
+		"../src/shapes/Rect.js",
+		"../src/controls/Button.js",
+	  	"../src/controls/ToggleButton.js",
+		"../src/controls/LayoutGroup.js",
+	    "../src/controls/ScrollArea.js"
+	],
+
+	"docs_out_path":"./output/EaselJSUiDocs/",
+
+	"connect_root": "../",
+
+	"livereload_watch": [],
+
+	"watch_exclude_files": []
+}

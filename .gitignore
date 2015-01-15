@@ -1,0 +1,13 @@
+# ignore IDEA project
+createjs_ui.iml
+.idea/
+
+# ignore coverage (created by istanbul during testing)
+tests/coverage/
+
+build/node_modules/
+build/output/
+build/.grunt
+
+tests/node_modules/
+tests/.grunt

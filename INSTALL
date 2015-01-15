@@ -1,0 +1,11 @@
+BUILD
+createjs_ui uses the build system grunt.
+for a detailed documentation see build/README.md
+
+TEST
+createjs_ui uses jasmine ( http://jasmine.github.io/ ) and karma ( http://karma-runner.github.io/ ) for testing.
+You need to install both, the easiest way to do that is with the following command that also installs phantomjs and some plugins and using npm ( https://www.npmjs.com/ ):
+
+# npm install karma-jasmine karma-cli jasmine-node karma-phantomjs-launcher karma-js-coverage grunt grunt-cli -g
+
+after installation just run "grunt" in the test folder to start a jasmine test run in phantomjs.
