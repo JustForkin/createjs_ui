@@ -30,5 +30,5 @@
         }
     });
 
-    createjs_ui.Rect = createjs.promote(Ellipse, "Shape");
+    createjs_ui.Ellipse = createjs.promote(Ellipse, "Shape");
 })();
