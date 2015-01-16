@@ -9,30 +9,35 @@ features
 
  1. common components for easy UI creation
      - Button
+       - simple Button, with label and background, easy to extend using themes
      - ToggleButton
+       - a button that has pressed-states
+     - LayoutGroup
+       - a group where you can add other components and align them
+     - ScrollArea
+       - a masked area that has exactly one child as content that can be scrolled.
+  1. layouting
+     - horizontal, vertical or tile-based layouts (very similar to the feathers LayoutGroup)
+  1. scrollable container
+     - the ScrollArea creates a view port for some content that can be scrolled using mouse (including mouse wheel) or touch gestues. When this content is a LayoutGroup the scroll behaviour will be dependent on the content layout (when it is a horizontal layout it will default to horizontal scrolling, vertical layout defaults to vertical scrolling - but you can force a specific scroll behaviour if you want).
+  1. basic shapes that provide width and height which makes it easier to change them dynamically (for use in themes)
 
-(yeah, its work-in-progress)
 overview
 ========
-
-files in this folder
---------------------
- - LICENSE - the BSD software license
- - INSTALL - information how to building and testing createjs_ui
- - test.sh - 1-line script for unix systems that simply runs karma
- - test.conf.js - configuration for jasmine testing
 
 subfolders of this folder
 -------------------------
 
+ - build - grunt build scripts
+ - example - simple examples to show the usage (and to have something more graphical besides the jasmine-tests)
  - lib - required libraries (just createjs)
  - src - source code for createjs_ui
- - test - jasmine unit tests
- - example - simple examples to show the usage (and to have something more graphical besides the jasmine-tests)
+ - tests - jasmine unit tests and istanbul coverage support (use grunt to run)
+ - themes - basic UI example themes
 
 Theming
 =======
-Creating own themes is easy. You can take a look at Themes/AeonTheme.js for an example. It is possible to have different Themes in one project which allows you to easily style components just as you want to.
+Creating own themes is easy. You can take a look at Themes/AeonTheme.js for a more detailed example using tiled images or Themes/ShapeTheme.js for a theme using only basic EaselJS shapes. It is possible to have different themes in one project which allows you to easily style components just as you want to.
 
 The theme/TestTheme.js is a fake Theme used only for the unit tests.
 
@@ -49,10 +54,12 @@ TODO
 ======
 (note: this ToDo list does not show an order or priority, nor will it all be implemented, its just a list of things that would be nice-to-have)
 
- - buttons without theme should at least show the label.
- - text renderer to allow DOM-text (makes i18n for some projects easier)
  - find a nicer name (createjs_ui does not roll that easily off the tongue)
- - viewport(s)
+ - better and more detailed documentation
+ - How-To tutorial and beginners documentation
+ - Bugfix: buttons without theme should at least show the label.
+ - text renderer to allow DOM-text (makes i18n for some projects easier)
+ - viewport(s) ?
  - build/compress themes
  - benchmarking capabilities
  - handle if createjs_ui gets imported before easeljs
@@ -72,19 +79,19 @@ TODO
    - TextInput
    - ProgressBar
    - ScaleTool (to change width/height of a control)
+   - ScrollContainer (sth. with the same API as feathers)
  - more examples:
    - ToggleButton
    - component explorer
+   - scrolling
  - more shapes:
-   - Circle
    - Line
    - Arc (e.g. for gauge)
    - PolyStar/Hex/Pentagon
    - Polyggon
  - transitions and transition animations
- - testing using js-imagediff and grunt (like EaselJS - see http://blog.createjs.com/unit-tests-in-easeljs-preloadjs/ )
+ - better testing using js-imagediff and grunt (like EaselJS - see http://blog.createjs.com/unit-tests-in-easeljs-preloadjs/ )
  - use a texture atlas, so we need to only load one image (and/or cache skins)
  - Drag-and-Drop
  - Gestue helper (pitch-zoom)
  - async testing
- - How-To tutorial and beginners documentation
