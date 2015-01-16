@@ -16,11 +16,11 @@ features
        - a group where you can add other components and align them
      - ScrollArea
        - a masked area that has exactly one child as content that can be scrolled.
-  1. layouting
+ 1. layouting
      - horizontal, vertical or tile-based layouts (very similar to the feathers LayoutGroup)
-  1. scrollable container
+ 1. scrollable container
      - the ScrollArea creates a view port for some content that can be scrolled using mouse (including mouse wheel) or touch gestues. When this content is a LayoutGroup the scroll behaviour will be dependent on the content layout (when it is a horizontal layout it will default to horizontal scrolling, vertical layout defaults to vertical scrolling - but you can force a specific scroll behaviour if you want).
-  1. basic shapes that provide width and height which makes it easier to change them dynamically (for use in themes)
+ 1. basic shapes that provide width and height which makes it easier to change them dynamically (for use in themes)
 
 overview
 ========
