@@ -43,23 +43,37 @@ this.createjs_ui = this.createjs_ui || {};
         this._enabled = value;
     };
     
+    /**
+     * check, if the layout of the content is horizontally alligned
+     */
+    p.layoutHorizontalAlign = function() {
+        return this.content.layout &&
+            this.content.layout.alignment == createjs_ui.LayoutAlignment.HORIZONTAL_ALIGNMENT
+    };
+
+    /**
+     * test if content width bigger than this width but content height is 
+     * smaller than this height (so we allow scrolling in only one direction)
+     */
+    p.upright = function() {
+        return this.content.height <= this.height &&
+            this.content.width > this.width
+    };
+    
     p._scrollContent = function(x, y) {
         // todo: press shift to switch direction
+        var scroll_auto = this.scrolldirection == ScrollArea.SCROLL_AUTO;
         var scroll = ScrollArea.SCROLL_VERTICAL;
-        if (this.scrolldirection == ScrollArea.SCROLL_HORIZONTAL || (
-                this.scrolldirection == ScrollArea.SCROLL_AUTO &&
-                this.content.layout &&
-                this.content.layout.alignment == createjs_ui.LayoutAlignment.HORIZONTAL_ALIGNMENT
-            ) || (
-                this.scrolldirection == ScrollArea.SCROLL_AUTO &&
-                this.content.height <= this.height &&
-                this.content.width > this.width
-            )
-        ) {
+        // if the scroll direction is set to SCROLL_AUTO we check, if the 
+        // layout of the content is set to horizontal or the content
+        // width is bigger than the current
+        if (this.scrolldirection == ScrollArea.SCROLL_HORIZONTAL || 
+            (scroll_auto && (this.layoutHorizontalAlign() || this.upright()) )) {
             scroll = ScrollArea.SCROLL_HORIZONTAL;
         }
         if (scroll == ScrollArea.SCROLL_HORIZONTAL) {
             if (this.content.width > this.width) {
+                // assure we are within bounds
                 x = Math.min(x, 0);
                 if (this.content.width) {
                     x = Math.max(x, -(this.content.width - this.width));
@@ -69,6 +83,7 @@ this.createjs_ui = this.createjs_ui || {};
         } 
         if (scroll == ScrollArea.SCROLL_VERTICAL) {
             if (this.content.height > this.height) {
+                // assure we are within bounds
                 y = Math.min(y, 0);
                 if (this.content.height && this.content.y < 0) {
                     y = Math.max(y, -(this.content.height - this.height));
@@ -125,7 +140,9 @@ this.createjs_ui = this.createjs_ui || {};
         if (this._content) {
             this.Container_removeChild(content);
         }
-        this.Container_addChild(content);
+        if (content) {
+            this.Container_addChild(content);
+        }
         this._content = content;
     };
 

@@ -11,14 +11,14 @@ this.createjs_ui = this.createjs_ui || {};
      */
     var Control = function(theme) {
         // set defaults
-        this.width = 100;
-        this.height = 100;
-        this.percentWidth = null;
-        this.percentHeight = null;
+        this.width = this.width || 100;
+        this.height = this.height || 100;
+        this.percentWidth = this.percentWidth || null;
+        this.percentHeight = this.percentHeight || null;
         // controls are enabled by default
         createjs.Container.call(this);
         this.setTheme(theme);
-        this.enabled = true;
+        this.enabled = this.enabled !== false;
         this._last_width = undefined;
         this._last_height = undefined;
         this.invalidState = true; // draw for the first time

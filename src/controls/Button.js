@@ -11,10 +11,10 @@
         this._pressed = false; // button is not pressed by default
         this._over = false; // mouse is not over button by default
         createjs_ui.Control.call(this, theme);
-        this.height = 20;
+        this.height = this.height || 20;
         this.mouseChildren = false;
         this.handleEvent({});
-        this.updateLabel = false; // label text changed
+        this.updateLabel = this.updateLabel !== false; // label text changed
     };
 
     var p = createjs.extend(Button, createjs_ui.Control);

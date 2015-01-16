@@ -10,8 +10,8 @@ this.createjs_ui = this.createjs_ui || {};
      * controls are containers
      */
     var LayoutGroup = function() {
-        this.percentWidth = null;
-        this.percentHeight = null;
+        this.percentWidth = this.percentWidth || null;
+        this.percentHeight = this.percentHeight || null;
         createjs.Container.call(this);
         this._viewPortBounds = new createjs_ui.ViewPortBounds();
         this._needUpdate = true;
