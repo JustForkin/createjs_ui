@@ -21,6 +21,11 @@
 	    "../src/controls/ScrollArea.js"
 	],
 
+  	"test_themes": [
+		"../themes/ShapeTheme.js",
+		"../tests/src/TestTheme.js"
+	],
+  
 	"docs_out_path":"./output/EaselJSUiDocs/",
 
 	"connect_root": "../",

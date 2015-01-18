@@ -1,32 +1,14 @@
+var path = require('path');
+var _ = require('lodash');
+
 module.exports = function (grunt) {
 	grunt.initConfig(
 		{
 			pkg: grunt.file.readJSON('package.json'),
 			jasmine: {
 				coverage: {
-					src: [
-						// make sure ScaleBitmap is loaded AFTER createjs,
-						// because it requires createjs.DisplayObject
-						'../src/skin/Theme.js',
-						'../src/layout/ViewPortBounds.js',
-						'../src/layout/Layout.js',
-						'../src/layout/LayoutAlignment.js',
-						'../src/layout/VerticalLayout.js',
-						'../src/layout/HorizontalLayout.js',
-						'../src/layout/TiledLayout.js',
-						'../src/layout/TiledColumnsLayout.js',
-						'../src/layout/TiledRowsLayout.js',
-						// make sure Control is loaded first (all other controls depend on
-						// Control)
-						'../src/core/Control.js',
-						'../src/shapes/Shape.js',
-						'../src/shapes/Rect.js',
-						'../src/controls/Button.js',
-						'../src/controls/ToggleButton.js',
-						'../src/controls/LayoutGroup.js',
-						'../themes/ShapeTheme.js',
-						'src/TestTheme.js'
-					],
+					src: getConfigValue('ui_source').concat(
+						 getConfigValue('test_themes')),
 					options: {
 						vendor: [
 							'../lib/createjs-2014.12.12.min.js',
@@ -46,27 +28,8 @@ module.exports = function (grunt) {
 					}
 				},
 				run: {
-					src: [
-						'../src/skin/Theme.js',
-						'../src/layout/ViewPortBounds.js',
-						'../src/layout/Layout.js',
-						'../src/layout/LayoutAlignment.js',
-						'../src/layout/VerticalLayout.js',
-						'../src/layout/HorizontalLayout.js',
-                        '../src/layout/TiledLayout.js',
-                        '../src/layout/TiledColumnsLayout.js',
-                        '../src/layout/TiledRowsLayout.js',
-						// make sure Control is loaded first (all other controls depend on
-						// Control)
-						'../src/core/Control.js',
-						'../src/shapes/Shape.js',
-						'../src/shapes/Rect.js',
-						'../src/controls/Button.js',
-						'../src/controls/ToggleButton.js',
-						'../src/controls/LayoutGroup.js',
-						'../themes/ShapeTheme.js',
-						'src/TestTheme.js'
-					],
+					src: getConfigValue('ui_source').concat(
+						 getConfigValue('test_themes')),
 					options: {
 						vendor: [
 							'../lib/createjs-2014.12.12.min.js',
@@ -119,6 +82,30 @@ module.exports = function (grunt) {
 		}
 	);
 
+
+	function getBuildConfig() {
+		// Read the global settings file from build first.
+		var config = grunt.file.readJSON('../build/config.json');
+
+		// If we have a config.local.json .. prefer its values.
+		if (grunt.file.exists('config.local.json')) {
+			var config2 = grunt.file.readJSON('config.local.json');
+			_.extend(config, config2);
+		}
+		return config;
+	}
+
+	function getConfigValue(name) {
+		var config = grunt.config.get('buildConfig');
+
+		if (config == null) {
+			config = getBuildConfig();
+			grunt.config.set('buildConfig', config);
+		}
+
+		return config[name];
+	}
+	
 	// Load all the tasks we need
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-contrib-connect');

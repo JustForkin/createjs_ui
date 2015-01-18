@@ -10,6 +10,7 @@
     "grunt-template-jasmine-istanbul": "~0.3.0",
     "canvas": "^1.1.6",
     "imagediff": "^1.0.7",
+    "lodash": "~2.4.1",
     "grunt-istanbul": "~0.4.0"
   },
   "engine": "node >= 0.10.22"
