@@ -11,8 +11,7 @@ module.exports = function (grunt) {
 						 getConfigValue('test_themes')),
 					options: {
 						vendor: [
-							'../lib/createjs-2014.12.12.min.js',
-							'../src/util/ScaleBitmap.js'
+							'../lib/createjs-2014.12.12.min.js'
 						],
 						specs: ['spec/*Spec.js'],
 						template: require('grunt-template-jasmine-istanbul'),
