@@ -83,9 +83,11 @@ this.createjs_ui = this.createjs_ui || {};
             return this._width;
         }
         var width = 0;
-        for (var i = 0; i < this.numChildren; i++) {
-            var child = this.getChildAt(i);
-            width = Math.max(width, child.x+child.width);
+        if (this.children) {
+            for (var i = 0; i < this.numChildren; i++) {
+                var child = this.getChildAt(i);
+                width = Math.max(width, child.x+child.width);
+            }
         }
         return width;
     };
@@ -99,9 +101,11 @@ this.createjs_ui = this.createjs_ui || {};
             return this._height;
         }
         var height = 0;
-        for (var i = 0; i < this.numChildren; i++) {
-            var child = this.getChildAt(i);
-            height = Math.max(height, child.y+child.height);
+        if (this.children) {
+            for (var i = 0; i < this.numChildren; i++) {
+                var child = this.getChildAt(i);
+                height = Math.max(height, child.y+child.height);
+            }
         }
         return height;
     };
