@@ -15,6 +15,7 @@
 		"../src/shapes/Shape.js",
 		"../src/shapes/Rect.js",
 		"../src/shapes/Ellipse.js",
+        "../src/shapes/Diamond.js",
 		"../src/controls/Button.js",
 	  	"../src/controls/ToggleButton.js",
 		"../src/controls/LayoutGroup.js",

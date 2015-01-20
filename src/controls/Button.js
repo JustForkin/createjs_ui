@@ -112,7 +112,7 @@
     };
 
     p.updateLabelDimensions = function () {
-        if (this.labelText) {
+        if (this.labelText && this.labelText.text) {
             this.labelText.x = (this.width - this.labelText.getMeasuredWidth()) / 2;
             this.labelText.y = (this.height - this.labelText.getMeasuredHeight()) / 2;
         }
