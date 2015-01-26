@@ -39,7 +39,6 @@ var LayoutExample;
             var inner = new createjs_ui.LayoutGroup();
             inner.layout = new createjs_ui.HorizontalLayout();
             inner.layout.gap = 10;
-            outer.addChild(inner);
             // add some buttons
             for (var i = 0; i < 10; i++) {
                 btn = new createjs_ui.Button();
@@ -47,6 +46,9 @@ var LayoutExample;
                 btn.label = (i+1)+". button";
                 inner.addChild(btn);
             }
+            var inner_scroll = new createjs_ui.ScrollArea(inner);
+            inner_scroll.width = 500;
+            outer.addChild(inner_scroll);
         }
         
     };
