@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Layout test</title>
+    <script src="../lib/createjs-2014.12.12.min.js"></script>
+    <script src="../lib/createjs_ui-0.0.1.combined.js"></script>
+    
+    <script src="../themes/AeonTheme.js"></script>
+    <script src="../themes/ShapeTheme.js"></script>
+
+    <script src="js/LayoutScrollAreaExample.js"></script>
+    <style>
+        canvas {
+            position:absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <script>
+        var stage;
+        function init() {
+            stage = new createjs.Stage("test_canvas");
+            new LayoutScrollAreaExample(stage);
+        }
+    </script>
+</head>
+<body onload="init();">
+<canvas id="test_canvas" width="640" height="480"></canvas>
+</body>
+</html>
