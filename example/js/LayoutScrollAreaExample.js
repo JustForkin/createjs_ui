@@ -24,8 +24,6 @@ var LayoutExample;
 
         // outer group that hosts some other groups
         var outer = new createjs_ui.LayoutGroup();
-        outer.x = 20;
-        outer.y = 20;
         
         //outer.width = stage.canvas.width - (grp.x*2);
         outer.layout = new createjs_ui.VerticalLayout();
@@ -33,6 +31,9 @@ var LayoutExample;
 
         var outer_scroll = new createjs_ui.ScrollArea(outer);
         outer_scroll.height = 300;
+        outer_scroll.width = 500;
+        outer_scroll.x = 20;
+        outer_scroll.y = 20;
         this.addChild(outer_scroll);
 
         for (var j = 0; j < 20; j++) {
@@ -43,10 +44,11 @@ var LayoutExample;
             for (var i = 0; i < 10; i++) {
                 btn = new createjs_ui.Button();
                 btn.height = 25;
-                btn.label = (i+1)+". button";
+                btn.label = (j+1) + ". - " + (i+1)+". button";
                 inner.addChild(btn);
             }
-            var inner_scroll = new createjs_ui.ScrollArea(inner);
+            var inner_scroll = new createjs_ui.ScrollArea();
+            inner_scroll.content = inner;
             inner_scroll.width = 500;
             outer.addChild(inner_scroll);
         }

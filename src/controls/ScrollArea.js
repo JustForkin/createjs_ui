@@ -7,7 +7,7 @@ this.createjs_ui = this.createjs_ui || {};
     var ScrollArea = function(content) {
         createjs.Container.call(this);
         this.content = content || null;
-        this.mask = new createjs.Shape();
+        this.mask = undefined;
         this.enabled = true;
         this._useMask = true;
         this.scrolldirection = ScrollArea.SCROLL_AUTO;
@@ -152,6 +152,7 @@ this.createjs_ui = this.createjs_ui || {};
 
     /**
      * do not remove children - we just have a content
+     * override addChild to prevent the developer from adding more than one context
      * @param child
      */
     p.removeChild = function(child) {
@@ -164,18 +165,19 @@ this.createjs_ui = this.createjs_ui || {};
 
 
     p.updateMask = function() {
-        if (this._height && this._width && this._useMask) {
+        if (this.height && this.width && this._useMask) {
             if (this.mask === undefined) {
                 this.mask = new createjs.Shape();
             }
             this.mask.graphics.clear()
                 .beginFill("#fff")
-                .drawRect(this.x, this.y, this._width, this._height)
+                .drawRect(this.x, this.y, this.width, this.height)
                 .endFill();
         } else {
             if (this.mask) {
                 this.mask.graphics.clear();
             }
+            this.mask = undefined;
         }
     };
     
