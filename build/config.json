@@ -2,6 +2,7 @@
 	"ui_source": [
 		"../src/util/ScaleBitmap.js",
 	    "../src/util/mouseWheelSupport.js",
+	    "../src/util/resizeSupport.js",
 		"../src/skin/Theme.js",
 		"../src/layout/ViewPortBounds.js",
 		"../src/layout/Layout.js",
