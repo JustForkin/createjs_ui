@@ -169,16 +169,25 @@ this.createjs_ui = this.createjs_ui || {};
             if (this.mask === undefined) {
                 this.mask = new createjs.Shape();
             }
-            this.mask.graphics.clear()
-                .beginFill("#fff")
-                .drawRect(this.x, this.y, this.width, this.height)
-                .endFill();
+            this.drawMask();
         } else {
             if (this.mask) {
                 this.mask.graphics.clear();
             }
             this.mask = undefined;
         }
+    };
+
+    /**
+     * draw mask (can be overwritten, e.g. to show something above the 
+     * scroll area when using a vertical layout)
+     * @private
+     */
+    p.drawMask = function() {
+        this.mask.graphics.clear()
+            .beginFill("#fff")
+            .drawRect(this.x, this.y, this.width, this.height)
+            .endFill();
     };
     
     p._setHeight = function(height) {
