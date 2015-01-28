@@ -95,8 +95,8 @@ this.createjs_ui = this.createjs_ui || {};
     
     p.handleWheel = function(event) {
         this._scrollContent(
-            this.content.x - event.delta * this.scrolldelta,
-            this.content.y - event.delta * this.scrolldelta
+            this.content.x + event.delta * this.scrolldelta,
+            this.content.y + event.delta * this.scrolldelta
         )
     };
 
