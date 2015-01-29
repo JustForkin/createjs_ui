@@ -89,7 +89,7 @@ this.createjs_ui = this.createjs_ui || {};
      */
     p.redraw = function() {
         if (this.invalidState) {
-            var skin = this.theme.getSkin(this.skinName, this._currentState);
+            var skin = this.theme.getSkin(this, this.skinName, this._currentState);
             // if we can not change the skin we assume that it is just
             // not loaded jet, so we just set invalidState if changeSkin
             // was successful and wait for the skin to complete (listen to the

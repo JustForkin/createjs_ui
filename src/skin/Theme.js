@@ -62,9 +62,9 @@ you can create a special theme just for single controls
         // for state "state" has changed
     };
 
-    p.getSkin = function(comp, state) {
+    p.getSkin = function(obj, comp, state) {
         if (this._skins[comp] && this._skins[comp][state]) {
-            return this._skins[comp][state]();
+            return this._skins[comp][state](obj);
         }
         return null;
     };
