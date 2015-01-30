@@ -144,7 +144,7 @@
 
     /**
     * handle Mouse Event
-    * TODO: handle multi-touch
+    * TODO: handle multi-touch (?)
     * @see http://www.createjs.com/Docs/EaselJS/files/easeljs_ui_ButtonHelper.js.html#l197
     * @method handleEvent
     * @param {Object} evt The mouse event to handle.
