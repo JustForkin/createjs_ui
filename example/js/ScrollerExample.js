@@ -3,28 +3,11 @@ var ScrollerExample;
 (function() {
     ScrollerExample = function(stage) {
         var grp, btn;
-        createjs.Container.call(this);
-
+        createjs_ui.Application.call(this, stage);
+        
         // initialize theme
         new createjs_ui.AeonTheme();
 
-        // set and configure stage
-        this.stage = stage;
-        createjs.Touch.enable(stage);
-        stage.addChild(this);
-        createjs.Ticker.setFPS(30);
-        createjs.Ticker.addEventListener(
-            "tick", createjs.proxy(this.tick, this));
-
-        // enabled mouse over / out events
-        stage.enableMouseOver(10);
-        // keep tracking the mouse even when it leaves the canvas
-        stage.mouseMoveOutside = true;
-        
-        // enable mouse wheel support for the stage
-        // (will be ignored outside the canvas)
-        createjs_ui.mouseWheelSupport(stage, true);
-        
         var rect = new createjs_ui.Rect();
         rect.width = 1000;
         rect.height = 120;
@@ -58,7 +41,7 @@ var ScrollerExample;
         this.addChild(sa_grp);
     };
 
-    var p = createjs.extend(ScrollerExample, createjs.Container);
+    var p = createjs.extend(ScrollerExample, createjs_ui.Application);
 
     p.tick = function(event) {
         this.stage.update(event);

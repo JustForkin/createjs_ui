@@ -2,23 +2,10 @@ var ButtonExample;
 
 (function() {
     ButtonExample = function(stage) {
-        createjs.Container.call(this);
+        createjs_ui.Application.call(this, stage);
 
         // initialize theme
         new createjs_ui.AeonTheme();
-
-        // set and configure stage
-        this.stage = stage;
-        createjs.Touch.enable(stage);
-        stage.addChild(this);
-        createjs.Ticker.setFPS(30);
-        createjs.Ticker.addEventListener(
-            "tick", createjs.proxy(this.tick, this));
-
-        // enabled mouse over / out events
-        stage.enableMouseOver(10);
-        // keep tracking the mouse even when it leaves the canvas
-        stage.mouseMoveOutside = true;
 
         var btn = new createjs_ui.Button();
         btn.width = 150;
@@ -47,7 +34,7 @@ var ButtonExample;
 
     };
 
-    var p = createjs.extend(ButtonExample, createjs.Container);
+    var p = createjs.extend(ButtonExample, createjs_ui.Application);
 
     p.tick = function(event) {
         this.stage.update(event);
