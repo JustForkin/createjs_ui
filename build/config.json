@@ -21,6 +21,7 @@
 		"../src/controls/Button.js",
 	  	"../src/controls/ToggleButton.js",
 		"../src/controls/LayoutGroup.js",
+        "../src/controls/ScrollBar.js",
 	    "../src/controls/ScrollArea.js"
 	],
 

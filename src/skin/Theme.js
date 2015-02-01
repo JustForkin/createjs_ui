@@ -15,11 +15,12 @@ you can create a special theme just for single controls
      * base functions for all themes
      */
     var Theme = function(global) {
+        // at its core a theme is just a dict that holds a collection of skins
         this._skins = {};
         // default color for label (e.g. buttons)
-        this.labelColor = "#000";
+        this.labelColor = this.labelColor || "#000";
         // default font for label (e.g. buttons)
-        this.labelFont = "12px Arial";
+        this.labelFont = this.labelFont || "12px Arial";
         if (global === true || global === undefined) {
             createjs_ui.theme = this;
         }

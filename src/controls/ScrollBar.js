@@ -13,7 +13,9 @@ this.createjs_ui = this.createjs_ui || {};
         this.addChild(this.thumb);
         // TODO: get track from skin
     };
-
+    
+    ScrollBar.SKIN_NAME = "scroll_bar";
+    
     ScrollBar.DESKTOP_MODE = "desktop";
     ScrollBar.MOBILE_MODE = "mobile";
 
