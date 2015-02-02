@@ -51,6 +51,13 @@ this.createjs_ui = this.createjs_ui || {};
         }
     };
 
+    p.getImage = function(name) {
+        var queue = this.queue;
+        return function() {
+            return new createjs.Bitmap(queue.getResult(name));
+        }
+    };
+
     /**
      * all images loaded
      * @param event
@@ -83,9 +90,42 @@ this.createjs_ui = this.createjs_ui || {};
                 AeonTheme.SELECTED_BUTTON_SCALE_9_GRID));
         
         var sb = createjs_ui.ScrollBar;
+        var st = createjs_ui.ScrollThumb;
+
         this.setSkin(sb.SKIN_NAME, "horizontal_track",
             this.getScaleImage("horizontal-scroll-bar-track-skin",
                 AeonTheme.HORIZONTAL_SCROLL_BAR_TRACK_SCALE_9_GRID));
+
+        this.setSkin(st.SKIN_NAME, "horizontal_" + b.UP,
+            this.getScaleImage("horizontal-scroll-bar-thumb-up-skin",
+            AeonTheme.HORIZONTAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "horizontal_" + b.DOWN,
+            this.getScaleImage("horizontal-scroll-bar-thumb-down-skin",
+            AeonTheme.HORIZONTAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "horizontal_" + b.HOVER,
+            this.getScaleImage("horizontal-scroll-bar-thumb-hover-skin",
+            AeonTheme.HORIZONTAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "horizontal_thumb",
+            this.getImage("horizontal-scroll-bar-thumb-icon"));
+
+
+
+        this.setSkin(sb.SKIN_NAME, "vertical_track",
+            this.getScaleImage("vertical-scroll-bar-track-skin",
+                AeonTheme.VERTICAL_SCROLL_BAR_TRACK_SCALE_9_GRID));
+
+        this.setSkin(st.SKIN_NAME, "vertical_" + b.UP,
+            this.getScaleImage("vertical-scroll-bar-thumb-up-skin",
+                AeonTheme.VERTICAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "vertical_" + b.DOWN,
+            this.getScaleImage("vertical-scroll-bar-thumb-down-skin",
+                AeonTheme.VERTICAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "vertical_" + b.HOVER,
+            this.getScaleImage("vertical-scroll-bar-thumb-hover-skin",
+                AeonTheme.VERTICAL_SCROLL_BAR_THUMB_SCALE_9_GRID));
+        this.setSkin(st.SKIN_NAME, "vertical_thumb",
+            this.getImage("vertical-scroll-bar-thumb-icon"));
+
         
         this.dispatchEvent("ui_complete");
     };
