@@ -4,12 +4,13 @@ this.createjs_ui = this.createjs_ui || {};
 (function() {
     "use strict";
     
-    var ScrollArea = function(content) {
+    var ScrollArea = function(content, addListener) {
         createjs.Container.call(this);
         this.content = content || null;
         this.mask = undefined;
         this.enabled = true;
         this._useMask = true;
+        this.addListener = addListener || true;
         this.scrolldirection = ScrollArea.SCROLL_AUTO;
         // # of pixel you scroll at a time (if the event delta is 1 / -1)
         this.scrolldelta = 10;
@@ -31,11 +32,11 @@ this.createjs_ui = this.createjs_ui || {};
      **/
     p._setEnabled = function(value) {
         // update event listeners
-        if (value) {
+        if (value && this.addListener) {
             this.on("pressmove", this.handleMove, this);
             this.on("pressup", this.handleUp, this);
             this.on("mousewheel", this.handleWheel, this);
-        } else {
+        } else if (this.hasEventListener("pressmove")) {
             this.off("pressmove", this.handleMove, this);
             this.off("pressup", this.handleUp, this);
             this.off("mousewheel", this.handleWheel, this);
