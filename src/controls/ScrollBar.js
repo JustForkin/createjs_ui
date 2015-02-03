@@ -42,34 +42,34 @@ this.createjs_ui = this.createjs_ui || {};
 
     p.handleMove = function(e) {
         if(this.orientation == ScrollBar.HORIZONTAL) {
-            if(this.thumb.x + (e.stageX - this.start[0]) < 0) {
+            if(this.thumb.x + (e.localX - this.start[0]) < 0) {
                 this.thumb.x = 0;
-            } else if(this.thumb.x + this.thumb.width + (e.stageX - this.start[0]) > this.scrollArea.width) {
+            } else if(this.thumb.x + this.thumb.width + (e.localX - this.start[0]) > this.scrollArea.width) {
                 this.thumb.x = this.scrollArea.width - this.thumb.width;
             } else {
-                this.thumb.x += e.stageX - this.start[0];
+                this.thumb.x += e.localX - this.start[0];
             }
 
             this.scrollArea._scrollContent(-(this.scrollArea.content.width - this.scrollArea.width) * (this.thumb.x / (this.scrollArea.width - this.thumb.width)), 0);
-            this.start[0] = e.stageX;
+            this.start[0] = e.localX;
         } else {
-            if(this.thumb.y + (e.stageY - this.start[1]) < 0) {
+            if(this.thumb.y + (e.localY - this.start[1]) < 0) {
                 this.thumb.y = 0;
-            } else if(this.thumb.y + this.thumb.height + (e.stageY - this.start[1]) > this.scrollArea.height) {
+            } else if(this.thumb.y + this.thumb.height + (e.localY - this.start[1]) > this.scrollArea.height) {
                 this.thumb.y = this.scrollArea.height - this.thumb.height;
             } else {
-                this.thumb.y += e.stageY - this.start[1];
+                this.thumb.y += e.localY - this.start[1];
             }
 
             this.scrollArea._scrollContent(0, -(this.scrollArea.content.height - this.scrollArea.height) * (this.thumb.y / (this.scrollArea.height - this.thumb.height)));
-            this.start[1] = e.stageY;
+            this.start[1] = e.localY;
         }
 
     };
 
     p.handleMouseDown = function(e) {
-        this.start[0] = e.stageX;
-        this.start[1] = e.stageY;
+        this.start[0] = e.localX;
+        this.start[1] = e.localY;
     };
 
     p.showTrack = function(skin) {
