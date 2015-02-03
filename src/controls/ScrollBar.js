@@ -41,30 +41,47 @@ this.createjs_ui = this.createjs_ui || {};
     var p = createjs.extend(ScrollBar, createjs_ui.Control);
 
     p.handleMove = function(e) {
-        if(this.orientation == ScrollBar.HORIZONTAL) {
-            if(this.thumb.x + (e.localX - this.start[0]) < 0) {
-                this.thumb.x = 0;
-            } else if(this.thumb.x + this.thumb.width + (e.localX - this.start[0]) > this.scrollArea.width) {
-                this.thumb.x = this.scrollArea.width - this.thumb.width;
-            } else {
-                this.thumb.x += e.localX - this.start[0];
-            }
+        var x = this.thumb.x + e.localX - this.start[0];
+        var y = this.thumb.y + e.localY - this.start[1];
+        if (!this.moveThumb(x, y)) {
+            // do not override localX/localY in start
+            // if we do not move the thumb
+            return;
+        }
 
+        if(this.orientation == ScrollBar.HORIZONTAL) {
             this.scrollArea._scrollContent(-(this.scrollArea.content.width - this.scrollArea.width) * (this.thumb.x / (this.scrollArea.width - this.thumb.width)), 0);
             this.start[0] = e.localX;
         } else {
-            if(this.thumb.y + (e.localY - this.start[1]) < 0) {
-                this.thumb.y = 0;
-            } else if(this.thumb.y + this.thumb.height + (e.localY - this.start[1]) > this.scrollArea.height) {
-                this.thumb.y = this.scrollArea.height - this.thumb.height;
-            } else {
-                this.thumb.y += e.localY - this.start[1];
-            }
-
             this.scrollArea._scrollContent(0, -(this.scrollArea.content.height - this.scrollArea.height) * (this.thumb.y / (this.scrollArea.height - this.thumb.height)));
             this.start[1] = e.localY;
         }
+    };
 
+    /**
+     * move the thumb on the scroll bar within its bounds
+     * @param x new calculated x position of the thumb
+     * @param y new calculated y position of the thumb
+     * @returns {boolean} returns true if the position of the thumb has been
+     * moved
+     */
+    p.moveThumb = function(x, y) {
+        if(this.orientation == ScrollBar.HORIZONTAL) {
+            x = Math.min(x, this.width - this.thumb.width);
+            x = Math.max(x, 0);
+            if (x != this.thumb.x) {
+                this.thumb.x = x;
+                return true;
+            }
+        } else {
+            y = Math.min(y, this.height - this.thumb.height);
+            y = Math.max(y, 0);
+            if (y != this.thumb.y) {
+                this.thumb.y = y;
+                return true;
+            }
+        }
+        return false;
     };
 
     p.handleMouseDown = function(e) {
