@@ -23,11 +23,15 @@ this.createjs_ui = this.createjs_ui || {};
         this.thumb = new createjs_ui.ScrollThumb(this.orientation, theme);
         this.addChild(this.thumb);
 
-        this.thumb.addEventListener('pressmove', createjs.proxy(this.handleMove, this));
-        this.thumb.addEventListener('mousedown', createjs.proxy(this.handleMouseDown, this));
+        this.thumb.on('pressmove', this.handleMove, this);
+        this.thumb.on('mousedown', this.handleMouseDown, this);
+        this.on("mousewheel", this.handleWheel, this);
 
         this.invalidTrack = true;
         this.start = [0, 0];
+
+        // # of pixel you scroll at a time (if the event delta is 1 / -1)
+        this.scrolldelta = 10;
     };
     
     ScrollBar.SKIN_NAME = "scroll_bar";
@@ -43,18 +47,38 @@ this.createjs_ui = this.createjs_ui || {};
     p.handleMove = function(e) {
         var x = this.thumb.x + e.localX - this.start[0];
         var y = this.thumb.y + e.localY - this.start[1];
-        if (!this.moveThumb(x, y)) {
+        if (this.moveThumb(x, y)) {
             // do not override localX/localY in start
             // if we do not move the thumb
-            return;
-        }
-
-        if(this.orientation == ScrollBar.HORIZONTAL) {
-            this.scrollArea._scrollContent(-(this.scrollArea.content.width - this.scrollArea.width) * (this.thumb.x / (this.scrollArea.width - this.thumb.width)), 0);
+            this.scrollContent(x, y);
             this.start[0] = e.localX;
-        } else {
-            this.scrollArea._scrollContent(0, -(this.scrollArea.content.height - this.scrollArea.height) * (this.thumb.y / (this.scrollArea.height - this.thumb.height)));
             this.start[1] = e.localY;
+        }
+    };
+
+    /**
+     * scroll content to position
+     */
+    p.scrollContent = function(x, y) {
+        if (this.orientation == ScrollBar.HORIZONTAL) {
+            this.scrollArea._scrollContent(
+                -(this.scrollArea.content.width - this.scrollArea.width) *
+                    (x / (this.scrollArea.width - this.thumb.width)),
+                0);
+
+        } else {
+            this.scrollArea._scrollContent(
+                0,
+                -(this.scrollArea.content.height - this.scrollArea.height) *
+                    (y / (this.scrollArea.height - this.thumb.height)));
+        }
+    };
+
+    p.handleWheel = function (event) {
+        var x = this.thumb.x - event.delta * this.scrolldelta;
+        var y = this.thumb.y - event.delta * this.scrolldelta;
+        if (this.moveThumb(x, y)) {
+            this.scrollContent(x, y);
         }
     };
 
