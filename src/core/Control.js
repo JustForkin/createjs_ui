@@ -51,11 +51,7 @@ this.createjs_ui = this.createjs_ui || {};
     /**
      * remove old skin and add new one
      */
-    p.changeSkin = function(skin) {
-        if (!skin) {
-            // skin is null or undefined
-            return false;
-        }
+    p.changeState = function(skin) {
         if (this._currentSkin != skin) {
             if (this._currentSkin) {
                 this.removeChild(this._currentSkin);
@@ -65,7 +61,7 @@ this.createjs_ui = this.createjs_ui || {};
             skin.height = this.height;
             this.addChildAt(skin, 0);
         }
-        return true;
+        this.invalidState = false;
     };
 
     p._getEnabled = function() {
@@ -85,31 +81,36 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     /**
+     * get image from skin (will execute a callback with the loaded skin
+     * when it is loaded or call it directly when it already is loaded)
+     */
+    p.fromSkin = function(name, callback) {
+        var scope = this;
+        var skin = scope.theme.getSkin(scope, scope.skinName, name);
+        if (skin) {
+            callback.call(scope, skin);
+        } else {
+            var retry_proxy;
+            var theme = this.theme;
+            var retry = function(evt) {
+                theme.removeEventListener(
+                    "ui_complete", retry_proxy);
+                var skin = scope.theme.getSkin(scope, scope.skinName, name);
+                callback.call(scope, skin);
+            };
+            retry_proxy = createjs.proxy(retry, this);
+            theme.addEventListener(
+                "ui_complete", retry_proxy)
+        }
+    };
+
+
+    /**
      * redraw control for current state from theme
      */
     p.redraw = function() {
         if (this.invalidState) {
-            var skin = this.theme.getSkin(this, this.skinName, this._currentState);
-            // if we can not change the skin we assume that it is just
-            // not loaded jet, so we just set invalidState if changeSkin
-            // was successful and wait for the skin to complete (listen to the
-            // ui_complete-event) otherwise
-            if (this.changeSkin(skin)) {
-                this.invalidState = false;
-                if (this._redraw_proxy !== undefined) {
-                    this.theme.removeEventListener(
-                        "ui_complete", this._redraw_proxy);
-                    this._redraw_proxy = undefined;
-                }
-            } else {
-                if (this._redraw_proxy === undefined) {
-                    // store callback function so it can easily be removed
-                    // and will not be added twice for this control
-                    this._redraw_proxy = createjs.proxy(this.redraw, this);
-                }
-                this.theme.addEventListener(
-                    "ui_complete", this._redraw_proxy)
-            }
+            this.fromSkin(this._currentState, this.changeState);
         }
         if (this._currentSkin &&
             this.invalidDimensions()) {
