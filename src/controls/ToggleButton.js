@@ -23,6 +23,7 @@
     ToggleButton.SELECTED_HOVER = "selected_hover";
 
     p._setSelected = function(selected){
+        console.log("selected: " + selected);
         var state = this._currentState;
         this.invalidState = this._selected != selected || this.invalidState;
         if (state.indexOf("selected_") == 0) {
@@ -65,16 +66,14 @@
         }
 
         if (type == "mousedown") {
-            this.toggle();
             this._setCurrentState(createjs_ui.Button.DOWN);
             this._pressed = true;
         } else if (type == "pressup" || type == "mouseup") {
             this._pressed = false;
             if (this._over) {
-                this._setCurrentState(createjs_ui.Button.HOVER);
-            } else {
-                this._setCurrentState(createjs_ui.Button.UP);
+                this.toggle();
             }
+            this._setCurrentState(createjs_ui.Button.UP);
         } else if (type == "rollover") {
             this._over = true;
             if (this._pressed) {

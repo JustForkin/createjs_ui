@@ -26,7 +26,7 @@
             rect.borderColor = borderColor;
             return rect;
         }
-    }
+    };
 
     p.setSkins = function() {
         var b = createjs_ui.Button;
@@ -36,7 +36,22 @@
             this.getDummyButton("#ea8686", "red"));
         this.setSkin(b.SKIN_NAME, b.HOVER,
             this.getDummyButton("#60c865", "green"));
-    }
+
+        var tb = createjs_ui.ToggleButton;
+        this.setSkin(tb.SKIN_NAME, b.UP,
+            this.getDummyButton("#6073c8", "blue"));
+        this.setSkin(tb.SKIN_NAME, b.DOWN,
+            this.getDummyButton("#ea8686", "red"));
+        this.setSkin(tb.SKIN_NAME, b.HOVER,
+            this.getDummyButton("#60c865", "green"));
+
+        this.setSkin(tb.SKIN_NAME, tb.SELECTED_UP,
+            this.getDummyButton("#005698", "blue"));
+        this.setSkin(tb.SKIN_NAME, tb.SELECTED_DOWN,
+            this.getDummyButton("#ffd100", "red"));
+        this.setSkin(tb.SKIN_NAME, tb.SELECTED_HOVER,
+            this.getDummyButton("#e1ff00", "green"));
+    };
 
     createjs_ui.ShapeTheme = createjs.promote(ShapeTheme, "Theme");
 })();
