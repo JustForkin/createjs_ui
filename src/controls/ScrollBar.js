@@ -60,17 +60,18 @@ this.createjs_ui = this.createjs_ui || {};
      * scroll content to position
      */
     p.scrollContent = function(x, y) {
-        if (this.orientation == ScrollBar.HORIZONTAL) {
-            this.scrollArea._scrollContent(
-                -(this.scrollArea.content.width - this.scrollArea.width) *
-                    (x / (this.scrollArea.width - this.thumb.width)),
-                0);
-
-        } else {
-            this.scrollArea._scrollContent(
-                0,
-                -(this.scrollArea.content.height - this.scrollArea.height) *
-                    (y / (this.scrollArea.height - this.thumb.height)));
+        if (this.scrollArea && this.scrollArea.content) {
+            if (this.orientation == ScrollBar.HORIZONTAL) {
+                this.scrollArea._scrollContent(
+                    -(this.scrollArea.content.width - this.scrollArea.width) *
+                        (x / (this.scrollArea.width - this.thumb.width)),
+                    0);
+            } else {
+                this.scrollArea._scrollContent(
+                    0,
+                    -(this.scrollArea.content.height - this.scrollArea.height) *
+                        (y / (this.scrollArea.height - this.thumb.height)));
+            }
         }
     };
 
@@ -127,12 +128,13 @@ this.createjs_ui = this.createjs_ui || {};
     p.redraw = function() {
         if (this.invalidTrack) {
             this.fromSkin(this.orientation+"_track", this.showTrack);
-
-            if(this.orientation == ScrollBar.HORIZONTAL) {
-                this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
-            } else {
-                this.thumb.width = 20;
-                this.thumb.height= Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
+            this.thumb.width = 20;
+            if (this.scrollArea) {
+                if(this.orientation == ScrollBar.HORIZONTAL) {
+                    this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
+                } else {
+                    this.thumb.height= Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
+                }
             }
             this.invalidTrack = false;
         }

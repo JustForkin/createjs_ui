@@ -5,12 +5,13 @@ this.createjs_ui = this.createjs_ui || {};
     "use strict";
     
     var ScrollArea = function(content, addListener) {
+        this.addListener = addListener || true;
         createjs.Container.call(this);
         this.content = content || null;
         this.mask = undefined;
         this.enabled = true;
         this._useMask = true;
-        this.addListener = addListener || true;
+
         this.scrolldirection = ScrollArea.SCROLL_AUTO;
         // # of pixel you scroll at a time (if the event delta is 1 / -1)
         this.scrolldelta = 10;
