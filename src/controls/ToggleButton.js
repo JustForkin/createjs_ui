@@ -22,8 +22,7 @@
     ToggleButton.SELECTED_DOWN = "selected_down";
     ToggleButton.SELECTED_HOVER = "selected_hover";
 
-    p._setSelected = function(selected){
-        console.log("selected: " + selected);
+    p._setSelected = function(selected) {
         var state = this._currentState;
         this.invalidState = this._selected != selected || this.invalidState;
         if (state.indexOf("selected_") == 0) {
