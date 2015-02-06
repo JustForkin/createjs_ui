@@ -133,13 +133,11 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.showTrack = function(skin) {
-        this.addChildAt(skin, 0);
-
-        if(this.orientation == ScrollBar.HORIZONTAL) {
-            skin.width = this.width;
-        } else {
-            skin.height = this.height;
+        if(!this.skin) {
+            this.skin = skin;
+            this.addChildAt(this.skin, 0);
         }
+
         this.invalidTrack = false;
     };
 
@@ -148,12 +146,18 @@ this.createjs_ui = this.createjs_ui || {};
             this.fromSkin(this.orientation+"_track", this.showTrack);
             this.thumb.width = 20;
             if (this.scrollArea) {
-                if(this.orientation == ScrollBar.HORIZONTAL) {
+                if (this.orientation == ScrollBar.HORIZONTAL) {
                     this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
                 } else {
-                    this.thumb.height= Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
+                    this.thumb.height = Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
                 }
             }
+            if (this.orientation == ScrollBar.HORIZONTAL) {
+                this.skin.width = this.width;
+            } else {
+                this.skin.height = this.height;
+            }
+
             this.invalidTrack = false;
         }
     };
