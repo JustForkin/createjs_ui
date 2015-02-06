@@ -109,6 +109,24 @@ this.createjs_ui = this.createjs_ui || {};
         return false;
     };
 
+    p._set_width = function(width) {
+        this._width = width;
+        this.invalidTrack = true;
+    };
+
+    p._get_width = function() {
+        return this._width;
+    };
+
+    p._set_height = function(height) {
+        this._height = height;
+        this.invalidTrack = true;
+    };
+
+    p._get_height = function() {
+        return this._height;
+    };
+
     p.handleMouseDown = function(e) {
         this.start[0] = e.localX;
         this.start[1] = e.localY;
@@ -139,6 +157,17 @@ this.createjs_ui = this.createjs_ui || {};
             this.invalidTrack = false;
         }
     };
+
+    Object.defineProperties(p, {
+        width: {
+            set: p._set_width,
+            get: p._get_width
+        },
+        height: {
+            set: p._set_height,
+            get: p._get_height
+        }
+    });
 
     createjs_ui.ScrollBar = createjs.promote(ScrollBar, "Control");
 })();
