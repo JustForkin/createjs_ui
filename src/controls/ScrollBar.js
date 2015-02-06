@@ -144,7 +144,7 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.redraw = function() {
-        if (this.invalidTrack) {
+        if (this.invalidTrack && this.thumb) {
             this.fromSkin(this.orientation+"_track", this.showTrack);
             this.thumb.width = 20;
             if (this.scrollArea) {
