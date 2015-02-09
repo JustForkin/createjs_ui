@@ -20,16 +20,18 @@
                 var delta = Math.max(-1, Math.min(1,
                     (event.wheelDelta || -event.detail)));
                 
-                var target = stage._getObjectsUnderPoint(stage.mouseX, stage.mouseY, null, true);
+                var target = stage.getObjectsUnderPoint(stage.mouseX, stage.mouseY, 1);
                 if (!target) {
                     return;
                 }
-                var evt = new createjs.MouseEvent(
-                    "mousewheel", true, false,
-                    target.x, target.y, 
-                    event, -1, true, target.rawX, target.rawY);
-                evt.delta = delta;
-                target.dispatchEvent(evt);
+                for(var i = 0; i < target.length; i++) {
+                    var t = target[i];
+                    var evt = new createjs.MouseEvent(
+                        "mousewheel", true, false,
+                        t.x, t.y, event, -1, true, t.rawX, t.rawY);
+                    evt.delta = delta;
+                    t.dispatchEvent(evt);
+                }
             };
             if (canvas.addEventListener) {
                 canvas.addEventListener("mousewheel", 

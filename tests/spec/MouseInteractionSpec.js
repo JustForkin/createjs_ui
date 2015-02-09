@@ -95,23 +95,30 @@ describe("mouse interactions", function() {
         var btn = new createjs_ui.ToggleButton();
         var tb = createjs_ui.ToggleButton;
         var b = createjs_ui.Button;
+
         expect(btn._currentState).toBe(b.UP);
         expect(btn.selected).toBe(false);
         btn.toggle();
+
+        // button has been selected
         expect(btn._currentState).toBe(tb.SELECTED_UP);
         expect(btn.selected).toBe(true);
         
-        // mousedown should also toggle the state
-        fakeMouseEvent(btn, "mousedown");
-        expect(btn.selected).toBe(false);
+        // mouseup (after rollover) should also toggle the state,
+        // a mousedown before that should not change the toggle state
+        fakeMouseEvent(btn, "rollover");
+        expect(btn._currentState).toBe(tb.SELECTED_HOVER);
         fakeMouseEvent(btn, "mousedown");
         expect(btn.selected).toBe(true);
-        
+        fakeMouseEvent(btn, "mouseup");
+        expect(btn.selected).toBe(false);
+
         fakeMouseEvent(btn, "rollover");
-        expect(btn._currentState).toBe(tb.SELECTED_DOWN);
+        expect(btn._currentState).toBe(b.HOVER);
+        // press also toggles the button
         fakeMouseEvent(btn, "pressup");
         expect(btn.selected).toBe(true);
         
-        expect(btn._currentState).toBe(tb.SELECTED_HOVER);
+        expect(btn._currentState).toBe(tb.SELECTED_UP);
     })
 });
