@@ -112,6 +112,9 @@ this.createjs_ui = this.createjs_ui || {};
     p._set_width = function(width) {
         this._width = width;
         this.invalidTrack = true;
+        if (this.thumb) {
+            this.thumb.invalidTrack = true;
+        }
     };
 
     p._get_width = function() {
@@ -121,6 +124,9 @@ this.createjs_ui = this.createjs_ui || {};
     p._set_height = function(height) {
         this._height = height;
         this.invalidTrack = true;
+        if (this.thumb) {
+            this.thumb.invalidTrack = true;
+        }
     };
 
     p._get_height = function() {
@@ -133,12 +139,14 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.showTrack = function(skin) {
-        if(!this.skin) {
-            this.skin = skin;
-            this.addChildAt(this.skin, 0);
-        }
+        if (this.skin != skin) {
+            if(this.skin) {
+                this.removeChild(this.skin);
+            }
 
-        this.invalidTrack = false;
+            this.addChildAt(skin, 0);
+            this.skin = skin;
+        }
     };
 
     p.redraw = function() {

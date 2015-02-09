@@ -23,8 +23,14 @@ this.createjs_ui = this.createjs_ui || {};
     };
 
     p.showTrack = function(skin) {
-        this.addChild(skin);
+        if (this.skin != skin) {
+            if(this.skin) {
+                this.removeChild(this.skin);
+            }
 
+            this.addChild(skin);
+            this.skin = skin;
+        }
         skin.x = (this.width - skin.getBounds().width )/ 2;
         skin.y = (this.height - skin.getBounds().height )/ 2;
         this.invalidTrack = false;
