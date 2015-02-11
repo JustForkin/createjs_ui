@@ -8,7 +8,10 @@ module.exports = function (grunt) {
 				// Default values
 				version: 'NEXT',
 				name: 'createjs_ui',
-				
+
+				// Setup doc names / paths.
+				docsName: '<%= pkg.name %>_docs-<%= version %>',
+				docsZip: "<%= docsName %>.zip",
 				// Setup Uglify for JS minification.
 				uglify: {
 					options: {
@@ -16,7 +19,7 @@ module.exports = function (grunt) {
 						preserveComments: "some",
 						compress: {
 							global_defs: {
-								"DEBUG": true
+								"DEBUG": false
 							}
 						}
 					},
@@ -69,7 +72,68 @@ module.exports = function (grunt) {
 						}
 					}
 				},
-			    copy: {
+
+				// Build docs using yuidoc
+				yuidoc: {
+					compile: {
+						name: '<%= pkg.name %>',
+						version: '<%= version %>',
+						description: '<%= pkg.description %>',
+						url: '<%= pkg.url %>',
+						logo: '<%= pkg.logo %>',
+						options: {
+							paths: ['./'],
+							outdir: '<%= docsFolder %>',
+							linkNatives: true,
+							attributesEmit: true,
+							selleck: true,
+							helpers: ["../build/path.js"],
+							themedir: "../build/createjsTheme/"
+						}
+					}
+				},
+
+				compress: {
+					build: {
+						options: {
+							mode:'zip',
+							archive:'output/<%= docsZip %>'
+						},
+						files: [
+							{expand:true, src:'**', cwd:'<%= docsFolder %>'}
+						]
+					}
+				},
+
+
+				sass: {
+					docs: {
+						options: {
+							style: 'compressed'
+						},
+						files: {
+							'createjsTheme/assets/css/main.css': 'createjsTheme/assets/scss/main.scss'
+						}
+					}
+				},
+
+				clean: {
+				  docs: {
+					src: ["<%= docsFolder %>/assets/scss"]
+				  }
+				},
+
+				copy: {
+					docsZip: {
+						files: [
+							{expand: true, cwd:'output/', src:'<%= docsZip %>', dest:'../docs/'}
+						]
+					},
+					docsSite: {
+						files: [
+							{expand:true, cwd:'<%= docsFolder %>', src:'**', dest:getConfigValue('docs_out_path')}
+						]
+					},
 					src: {
 						files: [
 							{expand: true, cwd:'./output/', src: '*<%=version %>*.js', dest: '../lib/'}
@@ -78,7 +142,6 @@ module.exports = function (grunt) {
 				}
 			}
 	);
-
 
 	function getBuildConfig() {
 		// Read the global settings file first.
@@ -143,12 +206,30 @@ module.exports = function (grunt) {
 	// Load all the tasks we need
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-yuidoc');
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
+	grunt.registerTask('setDocsBase', "Internal utility task to set a correct base for YUIDocs.", function() {
+		grunt.file.setBase('../src');
+		grunt.config.set('docsFolder', "../build/output/<%= docsName %>/");
+	});
+
+	grunt.registerTask('resetBase', "Internal utility task to reset the base, after setDocsBase", function() {
+		grunt.file.setBase('../build');
+		grunt.config.set('docsFolder', "./output/<%= docsName %>/");
+	});
+
+	/**
+	 * Build the docs using YUIdocs.
+	 */
+	grunt.registerTask('docs', [
+		"sass", "setDocsBase", "yuidoc", "resetBase", "clean:docs", "compress", "copy:docsZip"
+	]);
 
 	/**
 	 * Sets out version to the version in package.json (defaults to NEXT)
@@ -180,7 +261,7 @@ module.exports = function (grunt) {
 	 */
 	grunt.registerTask('build', function() {
 		grunt.config("buildArgs", this.args || []);
-		grunt.task.run(["setVersion", "coreBuild", "clearBuildArgs"]);
+		grunt.task.run(["setVersion", "coreBuild", "copy:docsSite", "clearBuildArgs"]);
 	});
 
 	grunt.registerTask('clearBuildArgs', function() {
@@ -192,7 +273,7 @@ module.exports = function (grunt) {
 	 *
 	 */
 	grunt.registerTask('coreBuild', [
-		"sourceBuild"
+		"docs", "sourceBuild"
 	]);
 
 	/**
