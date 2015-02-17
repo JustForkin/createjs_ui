@@ -103,7 +103,7 @@ describe("mouse interactions", function() {
         // button has been selected
         expect(btn._currentState).toBe(tb.SELECTED_UP);
         expect(btn.selected).toBe(true);
-        
+
         // mouseup (after rollover) should also toggle the state,
         // a mousedown before that should not change the toggle state
         fakeMouseEvent(btn, "rollover");
@@ -112,13 +112,14 @@ describe("mouse interactions", function() {
         expect(btn.selected).toBe(true);
         fakeMouseEvent(btn, "mouseup");
         expect(btn.selected).toBe(false);
-
+        
         fakeMouseEvent(btn, "rollover");
         expect(btn._currentState).toBe(b.HOVER);
-        // press also toggles the button
-        fakeMouseEvent(btn, "pressup");
-        expect(btn.selected).toBe(true);
         
-        expect(btn._currentState).toBe(tb.SELECTED_UP);
+        // press alone (without pressdown) does not toggle the button
+        fakeMouseEvent(btn, "pressup");
+        expect(btn.selected).toBe(false);
+        expect(btn._currentState).toBe(b.UP);
+        
     })
 });

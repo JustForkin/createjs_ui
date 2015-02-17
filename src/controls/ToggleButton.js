@@ -29,6 +29,7 @@
             state = state.substr(9, state.length);
         }
         this._selected = selected;
+        this._pressed = false;
         this._setCurrentState(state);
     };
 
@@ -68,10 +69,10 @@
             this._setCurrentState(createjs_ui.Button.DOWN);
             this._pressed = true;
         } else if (type == "pressup" || type == "mouseup") {
-            this._pressed = false;
-            if (this._over) {
+            if (this._over && this._pressed) {
                 this.toggle();
             }
+            this._pressed = false;
             this._setCurrentState(createjs_ui.Button.UP);
         } else if (type == "rollover") {
             this._over = true;
