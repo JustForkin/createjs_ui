@@ -24,9 +24,6 @@
     "url": "https://github.com/brean/easeljs_ui/issues"
   },
   "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Andreas Bresser",
-  "license": "BSD"
+  "license": "Apache 2"
 }
