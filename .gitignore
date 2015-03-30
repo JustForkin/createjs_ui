@@ -1,3 +1,5 @@
+build/
+
 # ignore IDEA project
 createjs_ui.iml
 .idea/

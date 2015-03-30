@@ -160,7 +160,7 @@ this.createjs_ui = this.createjs_ui||{};
      * into itself).
      **/
     p.draw = function(ctx, ignoreCache) {
-        if (this.DisplayObject_draw(ctx, ignoreCache)) { return true; }
+        if (this.DisplayObject_draw(ctx, ignoreCache) || (!this.image) || this.image.height == 0 || this.image.width == 0) { return true; }
 
         var centerX = this.scale9Grid.width;
         var centerY = this.scale9Grid.height;
@@ -177,7 +177,13 @@ this.createjs_ui = this.createjs_ui||{};
             var scaledFirstRegion = scale3Region1 * oppositeEdgeScale;
             var scaledThirdRegion = scale3Region3 * oppositeEdgeScale;
             var scaledSecondRegion = this.drawHeight - scaledFirstRegion - scaledThirdRegion;
-
+            if (scale3Region1 <= 0 || scale3Region3 <= 0 ||
+                oppositeEdgeScale <= 0 || scaledFirstRegion <= 0 ||
+                scaledThirdRegion <= 0 || scaledSecondRegion <= 0 ||
+                imageWidth <= 0) {
+                return true;
+            }
+            
             ctx.drawImage(this.image, 0, 0, imageWidth, scale3Region1, 0, 0, this.drawWidth, scaledFirstRegion);
             ctx.drawImage(this.image, 0, scale3Region1, imageWidth, centerY, 0, scaledFirstRegion, this.drawWidth, scaledSecondRegion);
             ctx.drawImage(this.image, 0, scale3Region1 + centerY, imageWidth, scale3Region3, 0, scaledFirstRegion + scaledSecondRegion, this.drawWidth, scaledThirdRegion);
@@ -192,6 +198,13 @@ this.createjs_ui = this.createjs_ui||{};
             scaledThirdRegion = scale3Region3 * oppositeEdgeScale;
             scaledSecondRegion = this.drawWidth - scaledFirstRegion - scaledThirdRegion;
 
+            if (scale3Region1 <= 0 || scale3Region3 <= 0 || 
+                oppositeEdgeScale <= 0 || scaledFirstRegion <= 0 || 
+                scaledThirdRegion <= 0 || scaledSecondRegion <= 0 || 
+                imageHeight <= 0) {
+                return true;
+            }
+            
             ctx.drawImage(this.image, 0, 0, scale3Region1, imageHeight, 0, 0, scaledFirstRegion, this.drawHeight);
             ctx.drawImage(this.image, scale3Region1, 0, centerX, imageHeight, scaledFirstRegion, 0, scaledSecondRegion, this.drawHeight);
             ctx.drawImage(this.image, scale3Region1 + centerX, 0, scale3Region3, imageHeight, scaledFirstRegion + scaledSecondRegion, 0, scaledThirdRegion, this.drawHeight);
@@ -204,7 +217,10 @@ this.createjs_ui = this.createjs_ui||{};
             var bottom = this.image.height - centerY - top;
             var scaledCenterX = this.drawWidth - left - right;
             var scaledCenterY = this.drawHeight - top - bottom;
-
+            
+            if (left <= 0 || top <= 0 || right <= 0 || bottom <= 0 || scaledCenterX <= 0 || scaledCenterY <= 0) {
+                return true;
+            }
             ctx.drawImage(this.image, 0, 0, left, top, 0, 0, left, top);
             ctx.drawImage(this.image, left, 0, centerX, top, left, 0, scaledCenterX, top);
             ctx.drawImage(this.image, left + centerX, 0, right, top, left + scaledCenterX, 0, right, top);
