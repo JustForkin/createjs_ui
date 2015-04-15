@@ -153,20 +153,22 @@ this.createjs_ui = this.createjs_ui || {};
         if (this.invalidTrack && this.thumb) {
             this.fromSkin(this.orientation+"_track", this.showTrack);
             this.thumb.width = 20;
-            if (this.scrollArea) {
-                if (this.orientation == ScrollBar.HORIZONTAL) {
-                    this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
-                } else {
-                    this.thumb.height = Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
+            if (this.skin) {
+                if (this.scrollArea) {
+                    if (this.orientation == ScrollBar.HORIZONTAL) {
+                        this.thumb.width = Math.max(100, this.scrollArea.width / (this.scrollArea.content.width / this.scrollArea.width));
+                    } else {
+                        this.thumb.height = Math.max(50, this.scrollArea.height / (this.scrollArea.content.height / this.scrollArea.height));
+                    }
                 }
-            }
-            if (this.orientation == ScrollBar.HORIZONTAL) {
-                this.skin.width = this.width;
-            } else {
-                this.skin.height = this.height;
-            }
+                if (this.orientation == ScrollBar.HORIZONTAL) {
+                    this.skin.width = this.width;
+                } else {
+                    this.skin.height = this.height;
+                }
 
-            this.invalidTrack = false;
+                this.invalidTrack = false;
+            }
         }
     };
 
