@@ -11,11 +11,12 @@
      */
     function mouseWheelSupport(stage, enable) {
         var canvas = stage.canvas;
+        var id = stage.canvas.id;
         if (enable || enable === undefined) {
-            if (createjs_ui._mouseWheelHandler !== undefined) {
+            if (id in createjs_ui._mouseWheelHandler) {
                 return;
             }
-            createjs_ui._mouseWheelHandler = function(event) {
+            createjs_ui._mouseWheelHandler[id] = function(event) {
                 event = window.event || event;
                 var delta = Math.max(-1, Math.min(1,
                     (event.wheelDelta || -event.detail)));
@@ -35,29 +36,30 @@
             };
             if (canvas.addEventListener) {
                 canvas.addEventListener("mousewheel", 
-                    createjs_ui._mouseWheelHandler, false);
+                    createjs_ui._mouseWheelHandler[id], false);
                 canvas.addEventListener("DOMMouseScroll", 
-                    createjs_ui._mouseWheelHandler, false);
+                    createjs_ui._mouseWheelHandler[id], false);
             } else {
                 canvas.attachEvent("onmousewheel",
-                    createjs_ui._mouseWheelHandler);
+                    createjs_ui._mouseWheelHandler[id]);
             }
         } else {
-            if (createjs_ui._mouseWheelHandler === undefined) {
+            if (!(id in createjs_ui._mouseWheelHandler)) {
                 return;
             }
             if (canvas.removeEventListener) {
                 canvas.removeEventListener("mousewheel",
-                    createjs_ui._mouseWheelHandler);
+                    createjs_ui._mouseWheelHandler[id]);
                 canvas.removeEventListener("DOMMouseScroll", 
-                    createjs_ui._mouseWheelHandler);
+                    createjs_ui._mouseWheelHandler[id]);
             } else {
                 canvas.detachEvent("onmousewheel",
-                    createjs_ui._mouseWheelHandler);
+                    createjs_ui._mouseWheelHandler[id]);
             }
-            createjs_ui._mouseWheelHandler = undefined;
+            delete(createjs_ui._mouseWheelHandler[id]);
         }
     }
 
+    createjs_ui._mouseWheelHandler = {};
     createjs_ui.mouseWheelSupport = mouseWheelSupport;
 })();
