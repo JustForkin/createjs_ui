@@ -29,7 +29,6 @@
             state = state.substr(9, state.length);
         }
         this._selected = selected;
-        this._pressed = false;
         this._setCurrentState(state);
     };
 
