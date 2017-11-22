@@ -1,3 +1,7 @@
+WARNING! Current State of this project
+======================================
+Because we switched to [PIXI](http://www.pixijs.com/) development of this has been discontinued. Take a look at [GOWN]( https://github.com/greyrook/gown.js).
+
 createjs_ui
 ===========
 
